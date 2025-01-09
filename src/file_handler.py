@@ -1,3 +1,4 @@
+
 from pathlib import Path
 import pprint
 class FileHandler:
@@ -17,7 +18,7 @@ class FileHandler:
             files = list(directory.rglob(extension))
             files=list(map(lambda file: f"File: {file.name}", files))
             pprint.pprint(f"files with {extension} extension:{files}")
-    def move_files_by_extension(self,directory,extension,destination):
+    def move_files_by_extension(self,directory,extensions,destination):
         """
         Moves files in the specified directory with the given extensions to the destination directory.
 
@@ -30,10 +31,11 @@ class FileHandler:
         destination = Path(destination)
         if not destination.exists():
             destination.mkdir(parents=True)
-        files = list(directory.rglob(extension))
-        for file in files:
-            file.rename(destination / file.name)
-            pprint.pprint(f"Moved {file.name} to {destination}")
+        for extension in extensions:
+            files = list(directory.rglob(extension))
+            for file in files:
+                file.rename(destination / file.name)
+                pprint.pprint(f"Moved {file.name} to {destination}")
     def move_by_extension_and_directory(self,directory_from,mapper):
         """
         Moves files in the specified directory with the given extensions to the destination directory.
@@ -52,12 +54,3 @@ class FileHandler:
             for file in files:
                 file.rename(destination / file.name)
                 pprint.pprint(f"Moved {file.name} to {destination}")
-
-
-def main():
-    filehandler= FileHandler()
-    filehandler.list_files("/home/nouran/dl_utils/tmp",["*.json","*.txt"])
-    # filehandler.move_files_by_extension("/home/nouran/dl_utils/tmp","*.txt","/home/nouran/dl_utils/tmp2")
-    # filehandler.move_by_extension_and_directory("/home/nouran/dl_utils/tmp",{"*.txt":"/home/nouran/dl_utils/tmp2","*.json":"/home/nouran/dl_utils/tmp3"})
-
-main()
