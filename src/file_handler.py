@@ -34,7 +34,7 @@ class FileHandler:
         for extension in extensions:
             files = list(directory.rglob(extension))
             for file in files:
-                # file.rename(destination / file.name)
+                file.rename(destination / file.name)
                 pprint.pprint(f"Moved {file.name} to {destination}")
     def move_by_extension_and_directory(self,directory_from,mapper):
         """
