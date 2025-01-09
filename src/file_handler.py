@@ -18,7 +18,7 @@ class FileHandler:
             files = list(directory.rglob(extension))
             files=list(map(lambda file: f"File: {file.name}", files))
             pprint.pprint(f"files with {extension} extension:{files}")
-    def move_files_by_extension(self,directory,extensions,destination):
+    def move_files_by_extension(self,directory,extensions,destination,copy=False):
         """
         Moves files in the specified directory with the given extensions to the destination directory.
 
@@ -36,7 +36,7 @@ class FileHandler:
             for file in files:
                 file.rename(destination / file.name)
                 pprint.pprint(f"Moved {file.name} to {destination}")
-    def move_by_extension_and_directory(self,directory_from,mapper):
+    def move_by_extension_and_directory(self,directory_from,mapper,copy=False):
         """
         Moves files in the specified directory with the given extensions to the destination directory.
 
@@ -54,3 +54,4 @@ class FileHandler:
             for file in files:
                 file.rename(destination / file.name)
                 pprint.pprint(f"Moved {file.name} to {destination}")
+
