@@ -28,11 +28,13 @@ class FileHandler:
         """
         directory = Path(directory)
         destination = Path(destination)
+        if not destination.exists():
+            destination.mkdir(parents=True)
         for extension in extensions:
             files = list(directory.rglob(extension))
             for file in files:
                 file.rename(destination / file.name)
-                print(f"Moved {file.name} to {destination}")
+                pprint.pprint(f"Moved {file.name} to {destination}")
 
 def main():
     filehandler= FileHandler()
