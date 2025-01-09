@@ -13,11 +13,7 @@ def main():
     args = make_parser().parse_args()
     source_directory = args.source_directory
     destination_directory = args.destination_directory
-    extensions = args.extensions
-    print(f"source_directory: {source_directory}")
-    print(f"destination_directory: {destination_directory}")
-    print(f"extensions: {extensions}")
-    
+    extensions = args.extensions    
     filehandler= FileHandler()
     filehandler.list_files(source_directory,extensions)
     if args.move_files_by_extension:
@@ -26,4 +22,5 @@ def main():
         mapper = dict(zip(extensions,destination_directory))
         filehandler.move_by_extension_and_directory(source_directory,mapper)
 
-main()
+if __name__ == '__main__':
+    main()
