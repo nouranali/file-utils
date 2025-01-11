@@ -1,4 +1,3 @@
-
 from pathlib import Path
 import pprint
 class FileHandler:
@@ -54,4 +53,28 @@ class FileHandler:
             for file in files:
                 file.rename(destination / file.name)
                 pprint.pprint(f"Moved {file.name} to {destination}")
+    
+    def find_file_pairs(self,extensions,mapper,move_dir=None):
+        """
+        Finds and optionally moves files that do not have matching pairs based on their extensions.
+        Args:
+            extensions (list): A list of two file extensions to be compared.
+            mapper (dict): A dictionary mapping file extensions to their respective directories.
+            move_dir (str, optional): The directory to move non-matching files to. Defaults to None.
+        Returns:
+            None
+        """
+        dir1 = mapper[extensions[0]]    
+        dir2 = mapper[extensions[1]]
+        dir1_files = sorted(list(Path(dir1).rglob(extensions[0])))
+        dir2_files = sorted(list(Path(dir2).rglob(extensions[1])))
+        dir1_file_names = [file.name.split(".")[0] for file in dir1_files]
+        non_matching_files = [file for file in dir2_files if file.name.split(".")[0] not in dir1_file_names]
+        pprint.pprint(f"Non matching files:{non_matching_files}")
+        if move_dir:
+            for file in non_matching_files:
+                file.rename(Path(move_dir) / file.name)
+                pprint.pprint(f"Moved {file.name} to {dir1}")
 
+              
+        
